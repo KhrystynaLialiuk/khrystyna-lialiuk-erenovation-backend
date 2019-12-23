@@ -1,7 +1,6 @@
 package com.kodilla.erenovation_service.controller;
 
 import com.kodilla.erenovation_service.data.ServiceDataCreator;
-import com.kodilla.erenovation_service.domain.User;
 import com.kodilla.erenovation_service.dto.RegistrationDto;
 import com.kodilla.erenovation_service.dto.UserDto;
 import com.kodilla.erenovation_service.exception.UserNotFoundException;
@@ -32,6 +31,7 @@ public class UserController {
     public ResponseEntity<String> createUser(@RequestBody RegistrationDto registrationDto) {
         log.info("Creating a user {} {}", registrationDto.getName(), registrationDto.getSurname());
         userService.saveUser(registrationDto);
+        serviceDataCreator.createServiceData();
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -44,7 +44,6 @@ public class UserController {
     @GetMapping(value = "validation")
     public UserDto getUserByEmailAndPassword(@RequestParam("email") String email, @RequestParam("password") String password) {
         log.info("Searching for the user by email {} and password ...", email);
-        serviceDataCreator.createServiceData();
         return userService.findUserByEmailAndPassword(email, password);
     }
 
