@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -33,7 +34,12 @@ public class Reservation {
     @Column(name = "DATE")
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "BUILDING_ADDRESS_ID")
-    private BuildingAddress buildingAddress;
+    @NotNull
+    @Column(name = "TRANSPORTATION_COST")
+    private BigDecimal transportationCost;
+
+    @OneToOne(cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    @JoinColumn(name = "RESERVATION_ADDRESS_ID")
+    private ReservationAddress reservationAddress;
 }

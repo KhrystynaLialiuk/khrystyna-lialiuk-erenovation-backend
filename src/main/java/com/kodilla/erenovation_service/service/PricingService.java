@@ -1,16 +1,20 @@
 package com.kodilla.erenovation_service.service;
 
+import com.kodilla.erenovation_service.domain.User;
 import com.kodilla.erenovation_service.dto.PricingDto;
 import com.kodilla.erenovation_service.exception.PricingNotFoundException;
 import com.kodilla.erenovation_service.exception.UserNotFoundException;
 import com.kodilla.erenovation_service.mapper.PricingMapper;
 import com.kodilla.erenovation_service.repository.PricingRepository;
+import com.kodilla.erenovation_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PricingService {
@@ -24,6 +28,9 @@ public class PricingService {
     @Autowired
     private CalculationService calculationService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public PricingDto createPricingFor(final long userId) throws UserNotFoundException {
         PricingDto pricingDto = new PricingDto();
         pricingDto.setUserId(userId);
@@ -32,8 +39,12 @@ public class PricingService {
         return pricingMapper.toPricingDto(pricingRepository.save(pricingMapper.toPricing(pricingDto)));
     }
 
-    public List<PricingDto> getPricings() {
-        return pricingMapper.toPricingDtoList(pricingRepository.findAll());
+    public List<PricingDto> getPricingsForUser(final long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return pricingMapper.toPricingDtoList(pricingRepository.findByUser(user.get()));
+        }
+        return new ArrayList<>();
     }
 
     public PricingDto getPricing(final long pricingId) throws PricingNotFoundException {

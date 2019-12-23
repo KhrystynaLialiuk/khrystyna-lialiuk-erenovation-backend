@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class BuildingAddress {
+public class ReservationAddress {
 
     @Id
     @GeneratedValue
@@ -41,10 +41,4 @@ public class BuildingAddress {
     @NotNull
     @Column(name = "POSTAL_CODE")
     private String postalCode;
-
-    @OneToMany(
-            targetEntity = Reservation.class,
-            mappedBy = "buildingAddress"
-    )
-    private List<Reservation> reservations = new ArrayList<>();
 }

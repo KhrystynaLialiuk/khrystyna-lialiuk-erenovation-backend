@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -16,5 +17,6 @@ public class ReservationDto {
     private long userId;
     private long pricingId;
     private LocalDate date;
-    private long buildingAddressId;
+    private BigDecimal transportationCost;
+    private ReservationAddressDto reservationAddressDto;
 }

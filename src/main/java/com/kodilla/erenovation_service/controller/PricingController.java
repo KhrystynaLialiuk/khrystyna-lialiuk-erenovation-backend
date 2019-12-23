@@ -26,9 +26,9 @@ public class PricingController {
     }
 
     @GetMapping(value = "all")
-    public List<PricingDto> getAllPricings() {
-        log.info("Searching for all the pricings");
-        return pricingService.getPricings();
+    public List<PricingDto> getAllPricingForUser(@RequestParam long userId) {
+        log.info("Searching for all the pricings for user with ID {}", userId);
+        return pricingService.getPricingsForUser(userId);
     }
 
     @GetMapping
