@@ -4,6 +4,7 @@ import com.kodilla.erenovation_service.data.ServiceDataCreator;
 import com.kodilla.erenovation_service.dto.ServiceDto;
 import com.kodilla.erenovation_service.mapper.ServiceMapper;
 import com.kodilla.erenovation_service.repository.ServiceRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ServiceService {
 
@@ -37,15 +39,21 @@ public class ServiceService {
     }
 
     public HttpStatus createData() {
-        serviceDataCreator.createServiceData();
         List<com.kodilla.erenovation_service.domain.Service> savedServices = serviceRepository.findAll();
         if (savedServices.size() == 3) {
+            return HttpStatus.CREATED;
+        } else if (savedServices.size() == 0) {
+            serviceDataCreator.createServiceData();
             return HttpStatus.CREATED;
         }
         return HttpStatus.BAD_REQUEST;
     }
 
     public void deleteData() {
-        serviceRepository.deleteAll();
+        try {
+            serviceRepository.deleteAll();
+        } catch (Exception e) {
+            log.warn("Services not deleted");
+        }
     }
 }
