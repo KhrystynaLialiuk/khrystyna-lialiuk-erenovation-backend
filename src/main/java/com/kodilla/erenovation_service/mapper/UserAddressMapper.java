@@ -17,14 +17,14 @@ public class UserAddressMapper {
         return userAddress;
     }
 
-    public UserAddressDto toUserAddressDto(final UserAddress userAddress) {
-        UserAddressDto userAddressDto = new UserAddressDto();
-        userAddressDto.setId(userAddress.getId());
-        userAddressDto.setCity(userAddress.getCity());
-        userAddressDto.setStreet(userAddress.getStreet());
-        userAddressDto.setBuilding(userAddress.getBuilding());
-        userAddressDto.setApartment(userAddress.getApartment());
-        userAddressDto.setPostalCode(userAddress.getPostalCode());
-        return userAddressDto;
+    public UserAddressDto toUserAddressDto(final UserAddress address) {
+        return new UserAddressDto(
+                address.getId(),
+                address.getCity(),
+                address.getStreet(),
+                address.getBuilding(),
+                address.getApartment(),
+                address.getPostalCode()
+        );
     }
 }
