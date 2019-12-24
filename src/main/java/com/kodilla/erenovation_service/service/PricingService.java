@@ -52,8 +52,8 @@ public class PricingService {
                 .orElseThrow(PricingNotFoundException::new));
     }
 
-    public PricingDto updatePricing(final PricingDto pricingDto) throws UserNotFoundException{
+    public void updatePricing(final PricingDto pricingDto) throws UserNotFoundException{
         PricingDto updatedPricing = calculationService.calculatePricingDto(pricingDto);
-        return pricingMapper.toPricingDto(pricingRepository.save(pricingMapper.toPricing(updatedPricing)));
+        pricingMapper.toPricingDto(pricingRepository.save(pricingMapper.toPricing(updatedPricing)));
     }
 }

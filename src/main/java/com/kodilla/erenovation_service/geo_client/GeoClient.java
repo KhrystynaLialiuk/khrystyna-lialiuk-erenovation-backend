@@ -1,6 +1,7 @@
 package com.kodilla.erenovation_service.geo_client;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -18,8 +19,11 @@ public class GeoClient {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Value("${location.api}")
+    private String locationApiUrl;
+
     public List<GeoLocationDto> getLocation(String city, String street, String postalcode) {
-        String url = "https://nominatim.openstreetmap.org/";
+        String url = locationApiUrl;
         URI uri = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("city", city)
                 .queryParam("street", street)

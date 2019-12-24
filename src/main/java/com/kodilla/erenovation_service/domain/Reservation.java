@@ -30,7 +30,6 @@ public class Reservation {
     @JoinColumn(name = "PRICING_ID")
     private Pricing pricing;
 
-    @NotNull
     @Column(name = "DATE")
     private LocalDate date;
 

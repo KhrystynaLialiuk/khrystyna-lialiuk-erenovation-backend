@@ -24,8 +24,23 @@ public class DistanceClient {
     @Value("${geo.lon}")
     private String originLon;
 
+    @Value("${rapidapi.api.url}")
+    private String rapidApiUrl;
+
+    @Value("${rapidapi.host}")
+    private String rapidApiHost;
+
+    @Value("${rapidapi.host.value}")
+    private String rapidApiHostValue;
+
+    @Value("${rapidapi.key}")
+    private String rapidApiKey;
+
+    @Value("${rapidapi.key.value}")
+    private String rapidApiKeyValue;
+
     public ResponseEntity<DistanceDto> getDistance(String destinationLat, String destinationLon) {
-        String url = "https://trueway-matrix.p.rapidapi.com/CalculateDrivingMatrix";
+        String url = rapidApiUrl;
         String origins = originLat + "," + originLon;
         String destinations = destinationLat + "," + destinationLon;
         URI uri = UriComponentsBuilder.fromHttpUrl(url)
@@ -34,8 +49,8 @@ public class DistanceClient {
                 .build().encode().toUri();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("x-rapidapi-host", "trueway-matrix.p.rapidapi.com");
-        headers.set("x-rapidapi-key", "76954268aamsh6f08d5028e7f0afp1554b2jsn0d619f00b933");
+        headers.set(rapidApiHost, rapidApiHostValue);
+        headers.set(rapidApiKey, rapidApiKeyValue);
 
         HttpEntity request = new HttpEntity(headers);
 

@@ -45,7 +45,7 @@ public class QuestionService {
         return HttpStatus.CREATED;
     }
 
-    @Scheduled(cron = "0 * * ? * *")
+    @Scheduled(cron = "${frequency}")
     public void getQuestionsWithoutAnswer() {
         List<Question> questions = questionRepository.findByAnswer(null);
         log.info("PENDING QUESTIONS: " + questions.size());
