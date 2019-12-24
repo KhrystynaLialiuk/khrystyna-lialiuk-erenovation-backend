@@ -38,7 +38,8 @@ public class UserController {
     }
 
     @GetMapping(value = "validation")
-    public UserDto getUserByEmailAndPassword(@RequestParam("email") String email, @RequestParam("password") String password) {
+    public UserDto getUserByEmailAndPassword(@RequestParam("email") String email,
+                                             @RequestParam("password") String password) {
         log.info("Searching for the user by email {} and password ...", email);
         return userService.findUserByEmailAndPassword(email, password);
     }

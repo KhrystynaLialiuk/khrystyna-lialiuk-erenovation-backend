@@ -3,7 +3,6 @@ package com.kodilla.erenovation_service.service;
 import com.kodilla.erenovation_service.domain.User;
 import com.kodilla.erenovation_service.dto.ReservationDto;
 import com.kodilla.erenovation_service.exception.PricingNotFoundException;
-import com.kodilla.erenovation_service.exception.ReservationAddressNotFoundException;
 import com.kodilla.erenovation_service.exception.ReservationNotFoundException;
 import com.kodilla.erenovation_service.exception.UserNotFoundException;
 import com.kodilla.erenovation_service.mapper.ReservationMapper;
@@ -38,13 +37,17 @@ public class ReservationService {
     }
 
     public HttpStatus createReservation(final ReservationDto reservationDto) throws
-            UserNotFoundException, PricingNotFoundException, ReservationAddressNotFoundException {
-        reservationRepository.save(reservationMapper.toReservation(reservationDto));
-        return HttpStatus.CREATED;
+            UserNotFoundException {
+        try {
+            reservationRepository.save(reservationMapper.toReservation(reservationDto));
+            return HttpStatus.CREATED;
+        } catch (PricingNotFoundException e) {
+            return HttpStatus.NOT_FOUND;
+        }
     }
 
     public void updateReservation(final ReservationDto reservationDto) throws UserNotFoundException,
-            PricingNotFoundException, ReservationAddressNotFoundException, ReservationNotFoundException {
+            PricingNotFoundException, ReservationNotFoundException {
         if (reservationRepository.findById(reservationDto.getId()).isPresent()) {
             reservationRepository.save(reservationMapper.toReservation(reservationDto));
         } else {
