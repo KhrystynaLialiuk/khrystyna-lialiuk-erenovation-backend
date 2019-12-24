@@ -26,7 +26,7 @@ public class ReservationMapper {
     private ReservationAddressMapper reservationAddressMapper;
 
     public Reservation toReservation(ReservationDto reservationDto)
-            throws UserNotFoundException, PricingNotFoundException, ReservationAddressNotFoundException {
+            throws UserNotFoundException, PricingNotFoundException {
         Reservation reservation = new Reservation();
         reservation.setId(reservationDto.getId());
         reservation.setDate(reservationDto.getDate());

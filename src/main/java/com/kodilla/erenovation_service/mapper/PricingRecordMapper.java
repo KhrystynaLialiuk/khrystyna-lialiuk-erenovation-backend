@@ -41,9 +41,13 @@ public class PricingRecordMapper {
         pricingRecordDto.setQuantityOrMeters(pricingRecord.getQuantityOrMeters());
         pricingRecordDto.setPrice(pricingRecord.getPrice());
         pricingRecordDto.setPriceType(pricingRecord.getPriceType());
-        pricingRecordDto.setPricingId(pricingRecord.getPricing().getId());
-        pricingRecordDto.setServiceId(pricingRecord.getService().getId());
-        pricingRecordDto.setServiceTitle(pricingRecord.getService().getTitle());
+        if (pricingRecord.getPricing() != null) {
+            pricingRecordDto.setPricingId(pricingRecord.getPricing().getId());
+        }
+        if (pricingRecord.getService() != null) {
+            pricingRecordDto.setServiceId(pricingRecord.getService().getId());
+            pricingRecordDto.setServiceTitle(pricingRecord.getService().getTitle());
+        }
         return pricingRecordDto;
     }
 
