@@ -1,6 +1,5 @@
 package com.kodilla.erenovation_service.controller;
 
-import com.kodilla.erenovation_service.data.ServiceDataCreator;
 import com.kodilla.erenovation_service.dto.RegistrationDto;
 import com.kodilla.erenovation_service.dto.UserDto;
 import com.kodilla.erenovation_service.exception.UserNotFoundException;
@@ -21,13 +20,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private ServiceDataCreator serviceDataCreator;
-
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createUser(@RequestBody RegistrationDto registrationDto) {
         log.info("Creating a user {} {}", registrationDto.getName(), registrationDto.getSurname());
-        serviceDataCreator.createServiceData();
         return new ResponseEntity<>(userService.saveUser(registrationDto));
     }
 

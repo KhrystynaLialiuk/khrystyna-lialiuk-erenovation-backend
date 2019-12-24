@@ -1,7 +1,6 @@
 package com.kodilla.erenovation_service.controller;
 
 import com.google.gson.Gson;
-import com.kodilla.erenovation_service.data.ServiceDataCreator;
 import com.kodilla.erenovation_service.dto.RegistrationDto;
 import com.kodilla.erenovation_service.dto.UserAddressDto;
 import com.kodilla.erenovation_service.dto.UserDto;
@@ -33,9 +32,6 @@ public class UserControllerTestSuite {
 
     @MockBean
     private UserService userService;
-
-    @MockBean
-    private ServiceDataCreator serviceDataCreator;
 
     private static final String NAME = "John";
     private static final String SURNAME = "Smith";

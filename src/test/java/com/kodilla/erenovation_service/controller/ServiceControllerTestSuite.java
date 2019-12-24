@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,5 +48,22 @@ public class ServiceControllerTestSuite {
                 .andExpect(jsonPath("$[0]", is("Wall preparation")))
                 .andExpect(jsonPath("$[1]", is("Painting, 1 layer")))
                 .andExpect(jsonPath("$[2]", is("Lavatory pan installation")));
+    }
+
+    @Test
+    public void shouldCreateServiceData() throws Exception {
+        //Given
+        when(serviceService.createData()).thenReturn(HttpStatus.CREATED);
+
+        //When & Then
+        mockMvc.perform(post("/v1/service"))
+                .andExpect(status().is(201));
+    }
+
+    @Test
+    public void shouldDeleteServiceData() throws Exception {
+        //When & Then
+        mockMvc.perform(delete("/v1/service"))
+                .andExpect(status().isOk());
     }
 }

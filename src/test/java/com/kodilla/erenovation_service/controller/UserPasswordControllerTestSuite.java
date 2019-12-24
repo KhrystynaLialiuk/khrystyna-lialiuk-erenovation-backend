@@ -1,7 +1,6 @@
 package com.kodilla.erenovation_service.controller;
 
 import com.google.gson.Gson;
-import com.kodilla.erenovation_service.dto.UserAddressDto;
 import com.kodilla.erenovation_service.dto.UserPasswordDto;
 import com.kodilla.erenovation_service.service.UserPasswordService;
 import org.junit.Test;
