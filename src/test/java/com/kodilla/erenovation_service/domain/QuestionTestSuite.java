@@ -42,6 +42,7 @@ public class QuestionTestSuite {
 
     private User savedUser;
     private Question question;
+    private Question savedQuestion;
 
     @Before
     public void prepare() {
@@ -76,7 +77,7 @@ public class QuestionTestSuite {
         //Given
 
         //When
-        Question savedQuestion = questionRepository.save(question);
+        savedQuestion = questionRepository.save(question);
 
         //Then
         long id = savedQuestion.getId();
@@ -89,7 +90,7 @@ public class QuestionTestSuite {
     @Test
     public void findByUser() {
         //Given
-        questionRepository.save(question);
+        savedQuestion = questionRepository.save(question);
 
         //When
         List<Question> foundByUser = questionRepository.findByUser(savedUser);
@@ -101,7 +102,7 @@ public class QuestionTestSuite {
     @Test
     public void findByAnswer() {
         //Given
-        questionRepository.save(question);
+        savedQuestion = questionRepository.save(question);
 
         //When
         List<Question> foundByAnswer = questionRepository.findByAnswer(ANSWER);
@@ -113,7 +114,7 @@ public class QuestionTestSuite {
     @Test
     public void shouldNotFindByAnswer() {
         //Given
-        questionRepository.save(question);
+        savedQuestion = questionRepository.save(question);
 
         //When
         List<Question> notFoundByAnswer = questionRepository.findByAnswer(null);
@@ -125,7 +126,7 @@ public class QuestionTestSuite {
     @After
     public void cleanUp() {
         //CleanUp
-        questionRepository.deleteAll();
-        userRepository.deleteAll();
+        questionRepository.deleteById(savedQuestion.getId());
+        userRepository.deleteById(savedUser.getId());
     }
 }

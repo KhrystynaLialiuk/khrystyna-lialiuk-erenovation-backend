@@ -36,6 +36,6 @@ public class ServiceTypeTestSuite {
         Assert.assertTrue(foundById.isPresent());
 
         //CleanUp
-        serviceTypeRepository.deleteAll();
+        serviceTypeRepository.deleteById(id);
     }
 }

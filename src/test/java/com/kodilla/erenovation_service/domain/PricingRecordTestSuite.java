@@ -56,6 +56,10 @@ public class PricingRecordTestSuite {
     private static final Integer QUANTITY_OR_METERS = 2;
 
     private PricingRecord pricingRecord;
+    private User savedUser;
+    private Pricing savedPricing;
+    private ServiceType savedServiceType;
+    private Service savedService;
 
     @Before
     public void prepare() {
@@ -76,17 +80,17 @@ public class PricingRecordTestSuite {
         user.setPhone(PHONE);
         user.setUserPassword(userPassword);
         user.setUserAddress(userAddress);
-        User savedUser = userRepository.save(user);
+        savedUser = userRepository.save(user);
 
         Pricing pricing = new Pricing();
         pricing.setDate(LocalDate.now());
         pricing.setPrice(new BigDecimal("0"));
         pricing.setUser(savedUser);
-        Pricing savedPricing = pricingRepository.save(pricing);
+        savedPricing = pricingRepository.save(pricing);
 
         ServiceType serviceType = new ServiceType();
         serviceType.setTitle(SERVICE_TYPE_TITLE);
-        ServiceType savedServiceType = serviceTypeRepository.save(serviceType);
+        savedServiceType = serviceTypeRepository.save(serviceType);
 
         Service service = new Service();
         service.setTitle(TITLE);
@@ -94,7 +98,7 @@ public class PricingRecordTestSuite {
         service.setDiscountUnitPrice(DISCOUNT_UNIT_PRICE);
         service.setThresholdValue(THRESHOLD_VALUE);
         service.setServiceType(savedServiceType);
-        Service savedService = serviceRepository.save(service);
+        savedService = serviceRepository.save(service);
 
         pricingRecord = new PricingRecord();
         pricingRecord.setPrice(PRICE);
@@ -117,18 +121,24 @@ public class PricingRecordTestSuite {
 
         Optional<PricingRecord> foundById = pricingRecordRepository.findById(id);
         Assert.assertTrue(foundById.isPresent());
+
+        //CleanUp
+        pricingRecordRepository.deleteById(id);
     }
 
     @Test
     public void testFindAll() {
         //Given
-        pricingRecordRepository.save(pricingRecord);
+        PricingRecord savedRecord = pricingRecordRepository.save(pricingRecord);
 
         //When
         List<PricingRecord> pricingRecordList = pricingRecordRepository.findAll();
 
         //Then
         Assert.assertEquals(1, pricingRecordList.size());
+
+        //CleanUp
+        pricingRecordRepository.deleteById(savedRecord.getId());
     }
 
     @Test
@@ -149,10 +159,9 @@ public class PricingRecordTestSuite {
     @After
     public void cleanUp() {
         //CleanUp
-        pricingRepository.deleteAll();
-        userRepository.deleteAll();
-        serviceRepository.deleteAll();
-        serviceTypeRepository.deleteAll();
-        pricingRecordRepository.deleteAll();
+        pricingRepository.deleteById(savedPricing.getId());
+        userRepository.deleteById(savedUser.getId());
+        serviceRepository.deleteById(savedService.getId());
+        serviceTypeRepository.deleteById(savedServiceType.getId());
     }
 }

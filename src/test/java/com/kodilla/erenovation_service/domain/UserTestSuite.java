@@ -65,43 +65,41 @@ public class UserTestSuite {
     }
 
     @Test
-    public void testSaveUser() {
-        //Given
-
-        //When
-        userRepository.save(user);
-
-        //Then
-        long userId = user.getId();
-        Optional<User> savedUser = userRepository.findById(userId);
-        Assert.assertTrue(savedUser.isPresent());
-
-        long userPasswordId = userPassword.getId();
-        Optional<UserPassword> savedPassword = userPasswordRepository.findById(userPasswordId);
-        Assert.assertTrue(savedPassword.isPresent());
-
-        long userAddressId = userAddress.getId();
-        Optional<UserAddress> savedAddress = userAddressRepository.findById(userAddressId);
-        Assert.assertTrue(savedAddress.isPresent());
-
-        //CleanUp
-        userRepository.deleteAll();
-        userPasswordRepository.deleteAll();
-        userAddressRepository.deleteAll();
-    }
-
-    @Test
     public void testUserDelete() {
         //Given
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
 
         //When
-        userRepository.deleteAll();
+        userRepository.deleteById(savedUser.getId());
 
         //Then
         List<UserPassword> userPasswords = userPasswordRepository.findAll();
         List<UserAddress> userAddresses = userAddressRepository.findAll();
         Assert.assertEquals(0, userPasswords.size());
         Assert.assertEquals(0, userAddresses.size());
+    }
+
+    @Test
+    public void testSaveUser() {
+        //Given
+
+        //When
+        User savedUser = userRepository.save(user);
+
+        //Then
+        long userId = savedUser.getId();
+        Optional<User> foundUser = userRepository.findById(userId);
+        Assert.assertTrue(foundUser.isPresent());
+
+        long userPasswordId = savedUser.getUserPassword().getId();
+        Optional<UserPassword> foundPassword = userPasswordRepository.findById(userPasswordId);
+        Assert.assertTrue(foundPassword.isPresent());
+
+        long userAddressId = savedUser.getUserAddress().getId();
+        Optional<UserAddress> foundAddress = userAddressRepository.findById(userAddressId);
+        Assert.assertTrue(foundAddress.isPresent());
+
+        //CleanUp
+        userRepository.deleteById(userId);
     }
 }

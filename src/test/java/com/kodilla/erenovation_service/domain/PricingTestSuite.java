@@ -40,26 +40,23 @@ public class PricingTestSuite {
     private static final String PASSWORD = "Password";
     private static final String OTHER_PASSWORD = "pass";
 
-    private User user;
-    private UserPassword userPassword;
-    private UserAddress userAddress;
     private User savedUser;
     private Pricing pricing;
-
+    private Pricing savedPricing;
 
     @Before
     public void prepare() {
-        userPassword = new UserPassword();
+        UserPassword userPassword = new UserPassword();
         userPassword.setPassword(PASSWORD);
 
-        userAddress = new UserAddress();
+        UserAddress userAddress = new UserAddress();
         userAddress.setCity(CITY);
         userAddress.setStreet(STREET);
         userAddress.setBuilding(BUILDING);
         userAddress.setApartment(APARTMENT);
         userAddress.setPostalCode(POSTAL_CODE);
 
-        user = new User();
+        User user = new User();
         user.setName(NAME);
         user.setSurname(SURNAME);
         user.setEmail(EMAIL);
@@ -79,7 +76,7 @@ public class PricingTestSuite {
         //Given
 
         //When
-        Pricing savedPricing = pricingRepository.save(pricing);
+        savedPricing = pricingRepository.save(pricing);
 
         //Then
         long id = savedPricing.getId();
@@ -92,7 +89,7 @@ public class PricingTestSuite {
     @Test
     public void testFindAll() {
         //Given
-        pricingRepository.save(pricing);
+        savedPricing = pricingRepository.save(pricing);
 
         //When
         List<Pricing> pricingList = pricingRepository.findAll();
@@ -104,7 +101,7 @@ public class PricingTestSuite {
     @Test
     public void testFindByUser() {
         //Given
-        pricingRepository.save(pricing);
+        savedPricing = pricingRepository.save(pricing);
 
         //When
         List<Pricing> pricingListOfUser = pricingRepository.findByUser(savedUser);
@@ -116,7 +113,7 @@ public class PricingTestSuite {
     @Test
     public void testFindByUserShouldReturnEmptyList() {
         //Given
-        pricingRepository.save(pricing);
+        savedPricing = pricingRepository.save(pricing);
 
         UserPassword otherUserPassword = new UserPassword();
         otherUserPassword.setPassword(OTHER_PASSWORD);
@@ -143,12 +140,15 @@ public class PricingTestSuite {
 
         //Then
         Assert.assertEquals(0, pricingListOfOtherUser.size());
+
+        //CleanUp
+        userRepository.deleteById(otherSavedUser.getId());
     }
 
     @After
     public void cleanUp() {
         //CleanUp
-        pricingRepository.deleteAll();
-        userRepository.deleteAll();
+        pricingRepository.deleteById(savedPricing.getId());
+        userRepository.deleteById(savedUser.getId());
     }
 }

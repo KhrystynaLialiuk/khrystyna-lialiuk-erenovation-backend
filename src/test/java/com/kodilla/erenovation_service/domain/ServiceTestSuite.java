@@ -32,13 +32,13 @@ public class ServiceTestSuite {
     private static final BigDecimal DISCOUNT_UNIT_PRICE = new BigDecimal(4);
     private static final Integer THRESHOLD_VALUE = 100;
 
-    private ServiceType serviceType;
     private ServiceType savedServiceType;
     private Service service;
+    private Service savedService;
 
     @Before
     public void prepare() {
-        serviceType = new ServiceType();
+        ServiceType serviceType = new ServiceType();
         serviceType.setTitle(SERVICE_TYPE_TITLE);
         savedServiceType = serviceTypeRepository.save(serviceType);
 
@@ -55,7 +55,7 @@ public class ServiceTestSuite {
         //Given
 
         //When
-        Service savedService = serviceRepository.save(service);
+        savedService = serviceRepository.save(service);
 
         //Then
         long id = savedService.getId();
@@ -68,7 +68,7 @@ public class ServiceTestSuite {
     @Test
     public void testFindAll() {
         //Given
-        serviceRepository.save(service);
+        savedService = serviceRepository.save(service);
 
         //When
         List<Service> serviceList = serviceRepository.findAll();
@@ -80,7 +80,7 @@ public class ServiceTestSuite {
     @Test
     public void testFindByTitle() {
         //Given
-        serviceRepository.save(service);
+        savedService = serviceRepository.save(service);
 
         //When
         Optional<Service> foundByTitle = serviceRepository.findByTitle(TITLE);
@@ -92,7 +92,7 @@ public class ServiceTestSuite {
     @Test
     public void testFindByTitleShouldNotExist() {
         //Given
-        serviceRepository.save(service);
+        savedService = serviceRepository.save(service);
 
         //When
         Optional<Service> foundByTitle = serviceRepository.findByTitle(OTHER_TITLE);
@@ -104,7 +104,7 @@ public class ServiceTestSuite {
     @After
     public void cleanUp() {
         //CleanUp
-        serviceRepository.deleteAll();
-        serviceTypeRepository.deleteAll();
+        serviceRepository.deleteById(savedService.getId());
+        serviceTypeRepository.deleteById(savedServiceType.getId());
     }
 }

@@ -48,8 +48,9 @@ public class ReservationTestSuite {
     private static final BigDecimal TRANSPORTATION_COST = new BigDecimal(100);
 
     private User savedUser;
-    private ReservationAddress reservationAddress;
+    private Pricing savedPricing;
     private Reservation reservation;
+    private Reservation savedReservation;
 
     @Before
     public void prepare() {
@@ -76,7 +77,7 @@ public class ReservationTestSuite {
         pricing.setDate(LocalDate.now());
         pricing.setPrice(new BigDecimal("0"));
         pricing.setUser(savedUser);
-        Pricing savedPricing = pricingRepository.save(pricing);
+        savedPricing = pricingRepository.save(pricing);
 
         ReservationAddress reservationAddress = new ReservationAddress();
         reservationAddress.setCity(CITY);
@@ -98,7 +99,7 @@ public class ReservationTestSuite {
         //Given
 
         //When
-        Reservation savedReservation = reservationRepository.save(reservation);
+        savedReservation = reservationRepository.save(reservation);
 
         //Then
         long id = savedReservation.getId();
@@ -106,12 +107,15 @@ public class ReservationTestSuite {
 
         Optional<Reservation> foundById = reservationRepository.findById(id);
         Assert.assertTrue(foundById.isPresent());
+
+        //CleanUp
+        reservationRepository.deleteById(savedReservation.getId());
     }
 
     @Test
     public void testSaveReservationAddress() {
         //Given
-        Reservation savedReservation = reservationRepository.save(reservation);
+        savedReservation = reservationRepository.save(reservation);
 
         //When
         Optional<ReservationAddress> savedAddress = reservationAddressRepository
@@ -119,25 +123,31 @@ public class ReservationTestSuite {
 
         //Then
         Assert.assertTrue(savedAddress.isPresent());
+
+        //CleanUp
+        reservationRepository.deleteById(savedReservation.getId());
     }
 
 
     @Test
     public void testFindByUser() {
         //Given
-        reservationRepository.save(reservation);
+        savedReservation = reservationRepository.save(reservation);
 
         //When
         List<Reservation> foundByUser = reservationRepository.findByUser(savedUser);
 
         //Then
         Assert.assertEquals(1, foundByUser.size());
+
+        //CleanUp
+        reservationRepository.deleteById(savedReservation.getId());
     }
 
     @Test
     public void testDeleteReservationById() {
         //Given
-        Reservation savedReservation = reservationRepository.save(reservation);
+        savedReservation = reservationRepository.save(reservation);
         long reservationId = savedReservation.getId();
 
         //When
@@ -153,8 +163,7 @@ public class ReservationTestSuite {
     @After
     public void cleanUp() {
         //CleanUp
-        reservationRepository.deleteAll();
-        pricingRepository.deleteAll();
-        userRepository.deleteAll();
+        pricingRepository.deleteById(savedPricing.getId());
+        userRepository.deleteById(savedUser.getId());
     }
 }
