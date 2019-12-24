@@ -29,7 +29,7 @@ public class PricingRecordController {
         return new ResponseEntity<>(pricingRecordService.createPricingRecord(pricingRecordDto));
     }
 
-    @GetMapping
+    /*@GetMapping
     public PricingRecordDto getRecordById(@RequestParam long pricingRecordId) throws PricingRecordNotFoundException {
         log.info("Searching for pricing record with ID {}", pricingRecordId);
         return pricingRecordService.getPricingRecord(pricingRecordId);
@@ -39,7 +39,7 @@ public class PricingRecordController {
     public List<PricingRecordDto> getAllPricingRecords() {
         log.info("Searching for all the pricing records");
         return pricingRecordService.getPricingRecords();
-    }
+    }*/
 
     @PutMapping
     public PricingRecordDto updatePricingRecord(@RequestBody PricingRecordDto pricingRecordDto)

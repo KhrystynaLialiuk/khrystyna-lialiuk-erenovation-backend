@@ -35,8 +35,7 @@ public class ReservationController {
     public ResponseEntity<String> createReservation(@RequestBody ReservationDto reservationDto) throws
             UserNotFoundException, PricingNotFoundException, ReservationAddressNotFoundException {
         log.info("Creating new reservation");
-        reservationService.createReservation(reservationDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(reservationService.createReservation(reservationDto));
     }
 
     @PutMapping(consumes = APPLICATION_JSON_VALUE)

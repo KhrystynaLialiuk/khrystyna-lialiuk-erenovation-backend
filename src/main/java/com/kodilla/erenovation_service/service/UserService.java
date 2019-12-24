@@ -8,6 +8,7 @@ import com.kodilla.erenovation_service.mapper.RegistrationDtoMapper;
 import com.kodilla.erenovation_service.mapper.UserMapper;
 import com.kodilla.erenovation_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +26,10 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public void saveUser(final RegistrationDto registrationDto) {
+    public HttpStatus saveUser(final RegistrationDto registrationDto) {
         UserDto userDto = registrationDtoMapper.toUserDto(registrationDto);
         userRepository.save(userMapper.toUser(userDto));
+        return HttpStatus.CREATED;
     }
 
     public UserDto findUserById(final long userId) throws UserNotFoundException {

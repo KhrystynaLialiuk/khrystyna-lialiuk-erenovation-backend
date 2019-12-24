@@ -10,6 +10,7 @@ import com.kodilla.erenovation_service.mapper.ReservationMapper;
 import com.kodilla.erenovation_service.repository.ReservationRepository;
 import com.kodilla.erenovation_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,9 +37,10 @@ public class ReservationService {
         return new ArrayList<>();
     }
 
-    public void createReservation(final ReservationDto reservationDto) throws
+    public HttpStatus createReservation(final ReservationDto reservationDto) throws
             UserNotFoundException, PricingNotFoundException, ReservationAddressNotFoundException {
         reservationRepository.save(reservationMapper.toReservation(reservationDto));
+        return HttpStatus.CREATED;
     }
 
     public void updateReservation(final ReservationDto reservationDto) throws UserNotFoundException,

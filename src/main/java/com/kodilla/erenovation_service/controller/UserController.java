@@ -30,9 +30,8 @@ public class UserController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createUser(@RequestBody RegistrationDto registrationDto) {
         log.info("Creating a user {} {}", registrationDto.getName(), registrationDto.getSurname());
-        userService.saveUser(registrationDto);
         serviceDataCreator.createServiceData();
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(registrationDto));
     }
 
     @GetMapping()
@@ -47,11 +46,11 @@ public class UserController {
         return userService.findUserByEmailAndPassword(email, password);
     }
 
-    @GetMapping(value = "all")
+    /*@GetMapping(value = "all")
     public List<UserDto> getAllUsers() {
         log.info("Searching for all users");
         return userService.getUsers();
-    }
+    }*/
 
     @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) throws UserNotFoundException {
@@ -59,9 +58,9 @@ public class UserController {
         return userService.updateUser(userDto);
     }
 
-    @DeleteMapping
+   /* @DeleteMapping
     public void deleteUserById(@RequestParam long userId) throws UserNotFoundException {
         log.info("Deleting user with ID {}", userId);
         userService.deleteById(userId);
-    }
+    }*/
 }

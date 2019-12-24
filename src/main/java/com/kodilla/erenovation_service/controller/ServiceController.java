@@ -18,11 +18,11 @@ public class ServiceController {
     @Autowired
     private ServiceService serviceService;
 
-    @GetMapping(value = "all")
+    /*@GetMapping(value = "all")
     public List<ServiceDto> getAllServices() {
         log.info("Searching for all services");
         return serviceService.findAllServices();
-    }
+    }*/
 
     @GetMapping(value = "titles")
     public List<String> getAllServiceTitles() {
@@ -30,9 +30,9 @@ public class ServiceController {
         return serviceService.findAllServiceTitles();
     }
 
-    @GetMapping
+    /*@GetMapping
     public ServiceDto getServiceById(@RequestParam long serviceId) throws ServiceNotFoundException {
         log.info("Searching for the service with ID {}", serviceId);
         return serviceService.getService(serviceId);
-    }
+    }*/
 }
