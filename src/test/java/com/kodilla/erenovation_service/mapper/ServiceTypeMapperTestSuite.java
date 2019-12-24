@@ -21,9 +21,7 @@ public class ServiceTypeMapperTestSuite {
     @Test
     public void testToServiceType() {
         //Given
-        ServiceTypeDto serviceTypeDto = new ServiceTypeDto();
-        serviceTypeDto.setId(1L);
-        serviceTypeDto.setTitle(TITLE);
+        ServiceTypeDto serviceTypeDto = new ServiceTypeDto(1L, TITLE, null);
 
         //When
         ServiceType serviceType = serviceTypeMapper.toServiceType(serviceTypeDto);

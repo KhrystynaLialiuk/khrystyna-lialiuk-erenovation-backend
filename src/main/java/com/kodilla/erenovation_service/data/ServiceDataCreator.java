@@ -23,7 +23,6 @@ public class ServiceDataCreator {
         serviceType1.setTitle("Painting");
         serviceTypeRepository.save(serviceType1);
 
-
         ServiceType serviceType2 = new ServiceType();
         serviceType2.setTitle("Hydraulics");
         serviceTypeRepository.save(serviceType2);
