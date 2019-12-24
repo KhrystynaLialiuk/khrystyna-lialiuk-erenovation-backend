@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/v1/pricingposition")
 @CrossOrigin("*")
@@ -28,18 +26,6 @@ public class PricingRecordController {
         log.info("Creating new record for pricing {}", pricingRecordDto.getPricingId());
         return new ResponseEntity<>(pricingRecordService.createPricingRecord(pricingRecordDto));
     }
-
-    /*@GetMapping
-    public PricingRecordDto getRecordById(@RequestParam long pricingRecordId) throws PricingRecordNotFoundException {
-        log.info("Searching for pricing record with ID {}", pricingRecordId);
-        return pricingRecordService.getPricingRecord(pricingRecordId);
-    }
-
-    @GetMapping(value = "all")
-    public List<PricingRecordDto> getAllPricingRecords() {
-        log.info("Searching for all the pricing records");
-        return pricingRecordService.getPricingRecords();
-    }*/
 
     @PutMapping
     public PricingRecordDto updatePricingRecord(@RequestBody PricingRecordDto pricingRecordDto)

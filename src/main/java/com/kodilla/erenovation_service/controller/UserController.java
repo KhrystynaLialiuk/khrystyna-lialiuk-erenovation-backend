@@ -7,11 +7,8 @@ import com.kodilla.erenovation_service.exception.UserNotFoundException;
 import com.kodilla.erenovation_service.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -46,21 +43,9 @@ public class UserController {
         return userService.findUserByEmailAndPassword(email, password);
     }
 
-    /*@GetMapping(value = "all")
-    public List<UserDto> getAllUsers() {
-        log.info("Searching for all users");
-        return userService.getUsers();
-    }*/
-
     @PutMapping
     public UserDto updateUser(@RequestBody UserDto userDto) throws UserNotFoundException {
         log.info("Updating user with ID {}", userDto.getId());
         return userService.updateUser(userDto);
     }
-
-   /* @DeleteMapping
-    public void deleteUserById(@RequestParam long userId) throws UserNotFoundException {
-        log.info("Deleting user with ID {}", userId);
-        userService.deleteById(userId);
-    }*/
 }

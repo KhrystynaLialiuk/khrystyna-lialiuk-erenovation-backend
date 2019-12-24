@@ -7,13 +7,10 @@ import com.kodilla.erenovation_service.exception.ServiceNotFoundException;
 import com.kodilla.erenovation_service.exception.UserNotFoundException;
 import com.kodilla.erenovation_service.mapper.PricingRecordMapper;
 import com.kodilla.erenovation_service.repository.PricingRecordRepository;
-import com.kodilla.erenovation_service.repository.ServiceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -41,15 +38,6 @@ public class PricingRecordService {
             return HttpStatus.CREATED;
         }
         return HttpStatus.BAD_REQUEST;
-    }
-
-    public PricingRecordDto getPricingRecord(final long pricingRecordId) throws PricingRecordNotFoundException {
-        return pricingRecordMapper.toPricingRecordDto(pricingRecordRepository
-                .findById(pricingRecordId).orElseThrow(PricingRecordNotFoundException::new));
-    }
-
-    public List<PricingRecordDto> getPricingRecords() {
-        return pricingRecordMapper.toPricingRecordDtoList(pricingRecordRepository.findAll());
     }
 
     public PricingRecordDto updatePricingRecord(final PricingRecordDto pricingRecordDto)

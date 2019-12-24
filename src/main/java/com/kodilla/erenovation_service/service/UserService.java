@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,22 +46,10 @@ public class UserService {
         return new UserDto();
     }
 
-    public List<UserDto> getUsers() {
-        return userMapper.toUserDtoList(userRepository.findAll());
-    }
-
     public UserDto updateUser(final UserDto userDto) throws UserNotFoundException {
         if (userRepository.findById(userDto.getId()).isPresent()) {
             return userMapper.toUserDto(userRepository.save(userMapper.toUser(userDto)));
         }
         throw new UserNotFoundException();
-    }
-
-    public void deleteById(final long userId) throws UserNotFoundException {
-        try {
-            userRepository.deleteById(userId);
-        } catch (IllegalArgumentException e) {
-            throw new UserNotFoundException();
-        }
     }
 }

@@ -23,11 +23,6 @@ public class ServiceService {
         return serviceMapper.toServiceDtoList(serviceRepository.findAll());
     }
 
-    public ServiceDto getService(final long serviceId) throws ServiceNotFoundException {
-        return serviceMapper.toServiceDto(serviceRepository.findById(serviceId)
-                .orElseThrow(ServiceNotFoundException::new));
-    }
-
     public List<String> findAllServiceTitles() {
         List<ServiceDto> serviceDtoList = findAllServices();
         List<String> serviceTitles = new ArrayList<>();
